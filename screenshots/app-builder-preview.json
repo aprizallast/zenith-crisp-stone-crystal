@@ -1,0 +1,36 @@
+{
+  "url": "http://127.0.0.1:8080/",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "Agent BREW",
+      "hasCanvas": false,
+      "bodyTextLen": 1119,
+      "bodyTextHash": "70e9b24d5c30fec1c3dafe254dc637da05a82e6cf48910fe1fdc0f42b4ae1ba2",
+      "bodyTextPrefix": "TAPE 0 launches · $0.00 24h Agent BREW BNB · 56 0 tokens 0xeea6…",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-preview.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "Agent BREW",
+      "hasCanvas": false,
+      "bodyTextLen": 1054,
+      "bodyTextHash": "6fb73bab2db02bf5e1489b2061179bcd7c000ad23d0319ec982a94a817a8554d",
+      "bodyTextPrefix": "TAPE 0 launches · $0.00 24h Agent BREW 0 tokens 0xeea6…3d85 ⚡ Su",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-preview-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/app-builder-preview.json"
+}
