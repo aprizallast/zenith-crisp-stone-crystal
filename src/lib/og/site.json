@@ -1,5 +1,6 @@
 {
   "title": "Agent BREW",
   "description": "Live launchpad radar for brew.family tokens on BNB Chain — tape, dev clusters, and a tactical copilot.",
-  "card": "custom"
+  "card": "custom",
+  "host": "www.agentbrew.site"
 }
