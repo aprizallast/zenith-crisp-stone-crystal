@@ -364,6 +364,13 @@ export function grokOgHeadTags({
     tags.push(`<meta property="og:image" content="${escapeHtml(image)}">`);
     tags.push(`<meta property="og:image:width" content="1200">`);
     tags.push(`<meta property="og:image:height" content="630">`);
+    tags.push(`<meta property="og:url" content="https://${escapeHtml(publicHost)}/">`);
+    tags.push(`<meta property="og:site_name" content="${escapeHtml(title)}">`);
+    tags.push(`<meta name="twitter:title" content="${escapeHtml(title)}">`);
+    tags.push(`<meta name="twitter:image" content="${escapeHtml(image)}">`);
+    if (description) {
+      tags.push(`<meta name="twitter:description" content="${escapeHtml(description)}">`);
+    }
     const banner = String(site.banner ?? "").trim();
     if (banner) {
       const bannerUrl = `https://${publicHost}${banner.startsWith("/") ? banner : `/${banner}`}`;
