@@ -13,7 +13,9 @@ var install_page_default = "<!DOCTYPE html>\n<html lang=\"en\" class=\"device-de
 //#region \0virtual:grok-og-identity
 var grokOgIdentity = { "site": {
 	"title": "Agent BREW",
+	"description": "Live launchpad radar for brew.family tokens on BNB Chain — tape, dev clusters, and a tactical copilot.",
 	"card": "custom",
+	"host": "www.agentbrew.site",
 	"image": "/og.jpg"
 } };
 //#endregion
@@ -85,8 +87,9 @@ function publicAppHost(hostHeader) {
 * request host / X-Forwarded-Host. Never prefer request Host on a published
 * app — Envoy rewrites it to `*.vercel.app`.
 */
-function resolvePublicHost(hostHeader) {
-	return publicAppHost(process.env?.VITE_PUBLIC_HOSTNAME) || publicAppHost(hostHeader);
+function resolvePublicHost(hostHeader, site = {}) {
+	const fromSite = String(site.host ?? site.url ?? "").trim().replace(/^https?:\/\//, "").replace(/\/.*$/, "");
+	return publicAppHost(process.env?.VITE_PUBLIC_HOSTNAME) || publicAppHost(hostHeader) || publicAppHost(fromSite);
 }
 function isInstallQuery(url) {
 	const query = String(url ?? "").split("?", 2)[1] ?? "";
@@ -242,7 +245,7 @@ function applyCustomCardFromFs(site, cwd) {
 }
 function grokOgHeadTags({ host = "", appName = DEFAULT_APP_NAME, site = {}, documentTitle = "", cwd = process.cwd() } = {}) {
 	const title = resolveOgTitle(site, appName, host, documentTitle);
-	const publicHost = resolvePublicHost(host);
+	const publicHost = resolvePublicHost(host, site);
 	const tags = [`<meta name="twitter:card" content="summary_large_image">`, `<meta property="og:title" content="${escapeHtml(title)}">`];
 	const description = String(site.description ?? "").trim();
 	if (description) tags.push(`<meta property="og:description" content="${escapeHtml(description)}">`);
@@ -254,8 +257,20 @@ function grokOgHeadTags({ host = "", appName = DEFAULT_APP_NAME, site = {}, docu
 		const color = !custom ? placeholderCardColor(site) : "";
 		if (color) image += `&color=${encodeURIComponent(color)}`;
 		tags.push(`<meta property="og:image" content="${escapeHtml(image)}">`);
+		tags.push(`<meta property="og:image:secure_url" content="${escapeHtml(image)}">`);
+		tags.push(`<meta property="og:image:type" content="image/jpeg">`);
 		tags.push(`<meta property="og:image:width" content="1200">`);
 		tags.push(`<meta property="og:image:height" content="630">`);
+		tags.push(`<meta property="og:url" content="https://${escapeHtml(publicHost)}/">`);
+		tags.push(`<meta property="og:site_name" content="${escapeHtml(title)}">`);
+		tags.push(`<meta name="twitter:title" content="${escapeHtml(title)}">`);
+		tags.push(`<meta property="twitter:title" content="${escapeHtml(title)}">`);
+		tags.push(`<meta name="twitter:image" content="${escapeHtml(image)}">`);
+		tags.push(`<meta property="twitter:image" content="${escapeHtml(image)}">`);
+		if (description) {
+			tags.push(`<meta name="twitter:description" content="${escapeHtml(description)}">`);
+			tags.push(`<meta property="twitter:description" content="${escapeHtml(description)}">`);
+		}
 		const banner = String(site.banner ?? "").trim();
 		if (banner) {
 			const bannerUrl = `https://${publicHost}${banner.startsWith("/") ? banner : `/${banner}`}`;
